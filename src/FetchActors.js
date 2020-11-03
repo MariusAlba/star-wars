@@ -4,7 +4,7 @@ export default class FetchActors extends React.Component {
   state = {
     loading: true,
     person: null,
-    expanded: null,
+    expanded: null
   };
 
   async componentDidMount() {
@@ -26,22 +26,32 @@ export default class FetchActors extends React.Component {
     return (
       <div>
         <h1>Actors</h1>
-        {this.state.person.map((person, i) =>(
-        <div>
+        {this.state.person.map((person, i) => (
           <div>
-            {person.name}
-            <button onClick={() => this.setState({expanded: i})}>Info</button>
-            {this.state.expanded === i && (
-              <div>
-                {JSON.stringify(person)}
-                </div>
-            )}
+            <div>
+              {person.name}
+              <button onClick={() => this.setState({ expanded: i })}>
+                Info
+              </button>
+              {this.state.expanded === i && (
+                <CharacterInfo key={person.name} person={person} />
+              )}
+            </div>
           </div>
-
-        </div>
         ))}
+        <button onClick={() => alert("Entered")}>Enter</button>
       </div>
     );
   }
 }
+
+const CharacterInfo = ({ person }) => {
+  return (
+    <ul>
+      {Object.entries(person).map(([key, value]) => (
+        <li key={key}>{`${key}: ${value}`}</li>
+      ))}
+    </ul>
+  );
+};
 
